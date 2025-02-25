@@ -1,0 +1,105 @@
+name: transformation_demo
+priority: 100
+transformations:
+  - id: commandline_adaptation
+    type: field_name_prefix_mapping
+    mapping:
+      TargetFilename: file.path
+      CommandLine: process.title
+      Image: process.executable
+      USER: user.name
+      User: user.name
+      LogonId: user.id
+      type: auditd.message_type
+      name: process.executable
+      exe: process.executable
+      comm: process.title
+      DestinationIp: destination.ip
+      DestinationHostname: destination.domain
+      CurrentDirectory: file.path
+      ParentImage: process.executable
+      syscall: auditd.data.syscall
+      key: auditd.log.key
+      unit: auditd.data.unit
+      a1: auditd.data.a1
+      a2: auditd.data.a2
+      a3: auditd.data.a3
+      a4: audtid.data.a4
+      a5: auditd.data.a5
+      a6: auditd.data.a6
+      a7: audtid.data.a7
+    field_name_conditions:
+      - type: include_fields
+        fields:
+          - TargetFilename
+          - CommandLine
+          - Image
+          - USER
+          - User
+          - LogonId
+          - type
+          - name
+          - exe
+          - comm
+          - DestinationIp
+          - DestinationHostname
+          - CurrentDirectory
+          - ParentImage
+          - syscall
+          - key
+          - unit
+          - a1
+          - a2
+          - a3
+          - a4
+          - a5
+          - a6
+          - a7
+  - id: replace_uppercase_path
+    type: replace_string
+    regex: "PATH"
+    replacement: "path"
+    field_name_conditions:
+      - type: include_fields
+        fields:
+          - auditd.message_type
+  - id: replace_uppercase_syscall
+    type: replace_string
+    regex: "SYSCALL"
+    replacement: "syscall"
+    field_name_conditions:
+      - type: include_fields
+        fields:
+          - auditd.message_type
+  - id: replace_uppercase_execve
+    type: replace_string
+    regex: "EXECVE"
+    replacement: "execve"
+    field_name_conditions:
+      - type: include_fields
+        fields:
+          - auditd.message_type      
+  - id: replace_uppercase_service_stop
+    type: replace_string
+    regex: "SERVICE_STOP"
+    replacement: "service_stop"
+    field_name_conditions:
+      - type: include_fields
+        fields:
+          - auditd.message_type
+  - id: replace_uppercase_tty
+    type: replace_string
+    regex: "USER_TTY"
+    replacement: "user_tty"
+    field_name_conditions:
+      - type: include_fields
+        fields:
+          - auditd.message_type
+  - id: replace_uppercase_tty
+    type: replace_string
+    regex: "TTY"
+    replacement: "tty"
+    field_name_conditions:
+      - type: include_fields
+        fields:
+          - auditd.message_type
