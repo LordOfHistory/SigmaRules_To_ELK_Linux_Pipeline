@@ -14,7 +14,7 @@ transformations:
       name: process.executable
       exe: process.executable
       comm: process.title
-      DestinationIp: destination.ip
+      DestinationIp: auditd.data.socket.addr
       DestinationHostname: destination.domain
       CurrentDirectory: file.path
       ParentImage: process.executable
